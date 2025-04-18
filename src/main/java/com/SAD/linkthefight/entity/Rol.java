@@ -1,52 +1,32 @@
 package com.SAD.linkthefight.entity;
-
 import jakarta.persistence.*;
 
 @Entity
-public class Usuario {
+public class Rol {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String nombre;
-    private String correo;
+    private Integer tier;
     
-    @ManyToOne
-    @JoinColumn(name = "id_rol", referencedColumnName = "id")
-    private Rol rol;
-
     // Getters and Setters
-
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
-
     public String getNombre() {
         return nombre;
     }
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-    public String getCorreo() {
-        return correo;
+    public Integer getTier() {
+        return tier;
     }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setTier(Integer tier) {
+        this.tier = tier;
     }
-    public Rol getRol() {
-        return rol;
-    }
-
-    public void setRol(Rol rol) {
-        this.rol = rol;
-    }
-
     
 }
