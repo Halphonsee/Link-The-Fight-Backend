@@ -1,26 +1,39 @@
 package com.SAD.linkthefight.controller;
-
-import com.SAD.linkthefight.entity.Rol;
+import java.util.Map;
+import com.SAD.linkthefight.entity.Usuario;
 import com.SAD.linkthefight.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/usuario")
+@RequestMapping("/api/auth/usuario")
 public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
 
-    /* Aqui utilizaba la funcion obtenerRolDeUsuario como string, pero no me funciono, ya que en la consulta del postman me retorna algo similar a esto "com.SAD.linkthefight.entity.Rol@32b9fcce"*/
-    @GetMapping("/{idUsuario}/rol") // Puse que el id fuera en al url
-    public Rol obtenerRolDeUsuario(@PathVariable Long idUsuario) { 
-        return usuarioService.obtenerRolDeUsuario(idUsuario);
+    @PostMapping("/registrar")
+    public ResponseEntity<?> crear(@RequestBody String requestBody){
+      try {
+        Usuario response = usuarioService.registrarUsuario(requestBody);
+        return ResponseEntity.ok(response);
+      }catch (Exception e) {
+        return ResponseEntity.badRequest().body("Error al registrar el usuario: " + e.getMessage());
+      }
     }
-    
 
-    // @GetMapping("/rol/{idUsuario}") // Formato para que la id sea directa de la URL utilizando @PathVariable en vez de @RequestParam
-    // public Rol obtenerRolDeUsuario(@PathVariable Long idUsuario) { 
-    //     return usuarioService.obtenerRolDeUsuario(idUsuario);
-    // }
-}
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody String requestBody) {
+        try {
+            Map<String, String> response = usuarioService.authenticate(requestBody);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Error al autenticar el usuario: " + e.getMessage());
+        }
+    }
+
+
+  }

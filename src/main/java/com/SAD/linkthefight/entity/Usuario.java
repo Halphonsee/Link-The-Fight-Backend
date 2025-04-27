@@ -8,13 +8,24 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nombre;
-    private String correo;
+    private String name;
+    private String email;
+    private String password;
     
     @ManyToOne
     @JoinColumn(name = "id_rol", referencedColumnName = "id")
     private Rol rol;
 
+    public Usuario() {
+    }
+
+    public Usuario(Long id, String name, String email, String password, Rol rol) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.rol = rol;
+    }
     // Getters and Setters
 
     public Long getId() {
@@ -25,20 +36,20 @@ public class Usuario {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getCorreo() {
-        return correo;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setEmail(String email) {
+        this.email = email;
     }
     public Rol getRol() {
         return rol;
@@ -46,6 +57,12 @@ public class Usuario {
 
     public void setRol(Rol rol) {
         this.rol = rol;
+    }
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     
